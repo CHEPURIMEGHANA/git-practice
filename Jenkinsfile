@@ -1,5 +1,8 @@
 pipeline{
     agent any
+    tools{
+        gradle 'Gradle-8'
+    }
     stages
     {
         stage('Clone from Git Repo'){
@@ -7,9 +10,14 @@ pipeline{
                 git branch: 'main', url: 'https://github.com/CHEPURIMEGHANA/git-practice.git'
             }
         }    
-        stage('Print msg'){
+        stage('Build with Gradle'){
             steps{
-                echo 'Hello from declarative pipeline'
+                sh './gradlew build'
+            }
+        }
+        stage('Run App'){
+            steps{
+                sh './gradlew run'
             }
         }
     }
